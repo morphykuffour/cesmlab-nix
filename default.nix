@@ -1,22 +1,13 @@
-{ pkgs, lib, ... }:
+{pkgs ? import <nixpkgs> {}}:
+with pkgs;
+  mkShell {
+    imports = [./cesmlab-docker.nix];
 
-{
-  imports = [ ./cesm-lab.nix ];
-  environment.systemPackages = with pkgs; [
-    tree
-    subversion
-    unzip
-    valgrind
-  ];
+    # nativeBuildInputs = [
+    #   pkg-config
+    # ];
 
-  programs = {
-    zsh.enable = true;
-    command-not-found.enable = true;
-
-    vim.defaultEditor = true;
-
-    tmux.enable = true;
-  };
-
-  services.lorri.enable = true;
-}
+    buildInputs = [
+      subversion
+    ];
+  }
